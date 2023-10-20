@@ -82,8 +82,11 @@ export function Nav() {
             </Link>
           )
         }
-        <Link href='/publications'>
-          <p className='ml-4 text-muted-foreground'>Publications</p>
+        <Link href='/post'>
+          <p className='ml-4 text-muted-foreground'>Posts</p>
+        </Link>
+        <Link href='/profile'>
+          <p className='ml-4 text-muted-foreground'>Profiles</p>
         </Link>
       </div>
       <div className='sm:hidden mt-3'>

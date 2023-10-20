@@ -1,22 +1,32 @@
-'use client'
+'use client';
 
-import {
-  useActiveProfile
-} from '@lens-protocol/react-web'
+import Loader from "@/components/ui/loader";
+import { useSearchProfiles } from "@lens-protocol/react-web";
+import { Profile } from "@lens-protocol/widgets-react";
+import { useRouter } from "next/navigation";
 
-import { Profile } from '@lens-protocol/widgets-react'
-
-export default function Search() {
-  const { data: profile } = useActiveProfile()
-  
-  if (!profile) return null
-
+export default function ProfilesList() {
+  const { data, loading, error } = useSearchProfiles({
+    query: 'nader',
+    limit: 10,
+  })
+  const { push } = useRouter();
+  const handleRedirect = (handle: string) => {
+    push(`/@${handle}`)
+  }
+  if(loading) return <Loader />
+  if(error) return <div>{error.message}</div>
   return (
-    <div className="px-10 py-14 flex flex-col items-center">
-      <Profile
-        handle={profile.handle}
-        followButtonBackgroundColor='black'
-      />
+    <div className="flex flex-wrap justify-center gap-8 m-8">
+      {data?.map((profile) => (
+        <div key={profile.id} className="w-fit">
+          <Profile
+            profileId={profile.id}
+            key={profile.id}
+            onClick={() => handleRedirect(profile.handle)}
+          />
+        </div>
+      ))}
     </div>
   )
 }

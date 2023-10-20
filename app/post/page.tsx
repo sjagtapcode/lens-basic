@@ -5,6 +5,7 @@ import {
 } from '@lens-protocol/react-web'
 
 import { Publication } from '@lens-protocol/widgets-react'
+import { useRouter } from 'next/navigation'
 
 export default function Search() {
   const { data: publications, loading } = useExplorePublications({
@@ -15,8 +16,12 @@ export default function Search() {
     },
     limit: 25
   })
-  console.log('publications:', publications)
-  
+  const { push } = useRouter()
+
+  const handleRedirect = (publicationId: string) => {
+    push(`/post/${publicationId}`);
+  }
+
   return (
     <div className="px-10 py-14 flex flex-col items-center">
       { loading && <p>Loading ...</p> }
@@ -25,6 +30,7 @@ export default function Search() {
           <Publication
             publicationId={publication.id}
             key={publication.id}
+            onClick={() => handleRedirect(publication.id)}
           />
         ))
       }
