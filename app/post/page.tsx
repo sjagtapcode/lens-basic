@@ -26,7 +26,6 @@ export default function Search() {
 
   return (
     <div className="px-10 py-14 flex flex-col items-center">
-      { loading && <Loader /> }
       {
         publications?.map(({ id }) => (
           <div key={id} className='m-4'>
@@ -38,6 +37,7 @@ export default function Search() {
           </div>
         ))
       }
+      {loading ? <Loader /> : ''}
       {!loading && hasMore ? <Button onClick={next}>Load More</Button> : ''}
     </div>
   )

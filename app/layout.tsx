@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className='m-auto max-w-[1440px]'>
       <body className={inter.className}>
         <Web3ModalProvider>
           <LensProvider>
