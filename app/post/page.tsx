@@ -1,5 +1,7 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
+import Loader from '@/components/ui/loader'
 import {
   useExplorePublications, PublicationSortCriteria, PublicationTypes, PublicationMainFocus
 } from '@lens-protocol/react-web'
@@ -8,13 +10,13 @@ import { Publication } from '@lens-protocol/widgets-react'
 import { useRouter } from 'next/navigation'
 
 export default function Search() {
-  const { data: publications, loading } = useExplorePublications({
+  const { data: publications, loading, hasMore, next } = useExplorePublications({
     sortCriteria: PublicationSortCriteria.CuratedProfiles,
     publicationTypes: [PublicationTypes.Post],
     metadataFilter: {
       restrictPublicationMainFocusTo: [PublicationMainFocus.Image]
     },
-    limit: 25
+    limit: 5
   })
   const { push } = useRouter()
 
@@ -24,16 +26,19 @@ export default function Search() {
 
   return (
     <div className="px-10 py-14 flex flex-col items-center">
-      { loading && <p>Loading ...</p> }
+      { loading && <Loader /> }
       {
-        publications?.map(publication => (
-          <Publication
-            publicationId={publication.id}
-            key={publication.id}
-            onClick={() => handleRedirect(publication.id)}
-          />
+        publications?.map(({ id }) => (
+          <div key={id} className='m-4'>
+            <Publication
+              publicationId={id}
+              key={id}
+              onClick={() => handleRedirect(id)}
+            />
+          </div>
         ))
       }
+      {!loading && hasMore ? <Button onClick={next}>Load More</Button> : ''}
     </div>
   )
 }
