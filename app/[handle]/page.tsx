@@ -10,7 +10,7 @@ export default function ProfileByHandle({ params }: { params: { handle: string }
   const { data: profile, loading, error } = useProfile({
     handle: params?.handle?.startsWith('%40') ? params?.handle?.slice(3) : '',
   })
-  if(!params?.handle?.startsWith('%40')) return <div>Please check the URL, handle should start with an '@'</div>
+  if(!params?.handle?.startsWith('%40')) return <div>Please check the URL, handle should start with an @</div>
   if(loading) return <Loader />
   if(error) return <div>{error.message}</div>
   if (!profile) return <div>Profile Data Not Found!</div>
