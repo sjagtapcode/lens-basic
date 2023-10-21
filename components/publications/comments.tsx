@@ -8,7 +8,7 @@ export default function Comments({ publicationId, isComment }: { publicationId: 
   const handleToggle = () => {
     setComments((prev) => !prev)
   }
-  const { data, loading, hasMore, next, error } = useComments({
+  const { data, loading, hasMore, next } = useComments({
     commentsOf: publicationId,
     limit: 10,
   })
@@ -22,7 +22,7 @@ export default function Comments({ publicationId, isComment }: { publicationId: 
       {showComments ? (
         <>
           {data?.map(({ id, metadata, profile, stats, createdAt }) => (
-            <PostDetails isComment media={metadata?.media} name={metadata?.name || ''} content={metadata?.content || ''} postId={id} profile={profile} stats={stats} createdAt={createdAt} />
+            <PostDetails key={id} isComment media={metadata?.media} name={metadata?.name || ''} content={metadata?.content || ''} postId={id} profile={profile} stats={stats} createdAt={createdAt} />
           ))}
           {loading ? <Loader /> : ''}
           {!loading && hasMore ? (
