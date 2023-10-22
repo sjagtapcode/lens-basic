@@ -1,21 +1,12 @@
-'use client'
-
 import UserPublications from '@/components/publications/user-publications'
-import Loader from '@/components/ui/loader'
-import {
-  useProfile
-} from '@lens-protocol/react-web'
+import { getProfileByHandle } from '@/lib/queries/getProfileByHandle'
 
 const URL = process?.env?.NEXT_PUBLIC_URL || 'https://lens-basic.vercel.app'
 
-export default function ProfileByHandle({ params }: { params: { handle: string } }) {
-  const { data: profile, loading, error } = useProfile({
-    handle: params?.handle?.startsWith('%40') ? params?.handle?.slice(3) : '',
-  })
+export default async function ProfileByHandle({ params }: { params: { handle: string } }) {
+  const { profile, error } = await getProfileByHandle(params?.handle)
   const metaImage = `${URL}/api/og/profile?handle=${profile?.handle}&profilePicture=${profile?.picture?.__typename === "MediaSet" ? profile?.picture?.original?.url : ''}&coverPicture=${profile?.coverPicture?.__typename === "MediaSet" ? profile?.coverPicture?.original?.url : ''}&bio=${profile?.bio}`
-  if(!params?.handle?.startsWith('%40')) return <div>Please check the URL, handle should start with an @</div>
-  if(loading) return <Loader />
-  if(error) return <div>{error.message}</div>
+  if(error) return <div>{error}</div>
   if (!profile) return <div>Profile Data Not Found!</div>
   return (
     <div className=" flex flex-col items-center">
@@ -44,8 +35,8 @@ export default function ProfileByHandle({ params }: { params: { handle: string }
             <h3 className="text-xl mb-4 text-center">{profile?.bio}</h3>
           </div>
       </div>
-      {profile && <meta property="og:image" content={metaImage} />}
-      {profile && <UserPublications profileId={profile?.id} />}
+      <meta property="og:image" content={metaImage} />
+      <UserPublications profileId={profile?.id} />
     </div>
   )
 }

@@ -1,3 +1,5 @@
+"use client"
+
 import { PublicationTypes, usePublications } from "@lens-protocol/react-web";
 import { Publication } from "@lens-protocol/widgets-react";
 import { useRouter } from "next/navigation";
