@@ -6,10 +6,13 @@ import {
   useProfile
 } from '@lens-protocol/react-web'
 
+const URL = process?.env?.NEXT_PUBLIC_URL || 'https://lens-basic.vercel.app'
+
 export default function ProfileByHandle({ params }: { params: { handle: string } }) {
   const { data: profile, loading, error } = useProfile({
     handle: params?.handle?.startsWith('%40') ? params?.handle?.slice(3) : '',
   })
+  const metaImage = `${URL}/api/og/profile?handle=${profile?.handle}&profilePicture=${profile?.picture?.__typename === "MediaSet" ? profile?.picture?.original?.url : ''}&coverPicture=${profile?.coverPicture?.__typename === "MediaSet" ? profile?.coverPicture?.original?.url : ''}&bio=${profile?.bio}`
   if(!params?.handle?.startsWith('%40')) return <div>Please check the URL, handle should start with an @</div>
   if(loading) return <Loader />
   if(error) return <div>{error.message}</div>
@@ -41,6 +44,7 @@ export default function ProfileByHandle({ params }: { params: { handle: string }
             <h3 className="text-xl mb-4 text-center">{profile?.bio}</h3>
           </div>
       </div>
+      {profile && <meta property="og:image" content={metaImage} />}
       {profile && <UserPublications profileId={profile?.id} />}
     </div>
   )

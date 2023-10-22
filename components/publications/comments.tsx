@@ -15,7 +15,7 @@ export default function Comments({ publicationId, isComment }: { publicationId: 
   return (
     <>
       {!loading && data?.length ? (
-        <button className="bg-transparent text-[#999] hover:text-white" onClick={handleToggle}>
+        <button className="bg-transparent text-[#999]" onClick={handleToggle}>
           <span className="relative top-[-6px]">___</span> {showComments ? 'Hide' : 'View'} Comments
         </button>
       ) : ''}
