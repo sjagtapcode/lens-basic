@@ -1,3 +1,5 @@
+"use client"
+
 import { Media as MediaType } from "@lens-protocol/react-web";
 import { Publication } from "@lens-protocol/widgets-react";
 import { useRef } from "react";

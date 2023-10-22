@@ -1,17 +1,18 @@
-import { Profile, PublicationId, PublicationMediaSet, PublicationStats } from "@lens-protocol/react-web";
 import Media from "../media";
 import Comments from "./comments";
 import PastTime from "../ui/pastTime";
+import { ProfileFragment, PublicationMediaSetFragment, SimplePublicationStatsFragment } from "@lens-protocol/client";
+import { Profile, PublicationMediaSet } from "@lens-protocol/react-web";
 
 export default function PostDetails({ media, name, content, postId, createdAt, isComment, profile, stats }: {
-  media: PublicationMediaSet[],
+  media?: PublicationMediaSetFragment[] | PublicationMediaSet[],
   name: string,
   content: string,
-  postId: PublicationId,
-  createdAt: string,
-  profile: Profile
+  postId?: string,
+  createdAt?: string,
+  profile?: Profile | ProfileFragment,
   isComment?: boolean,
-  stats: PublicationStats,
+  stats?: SimplePublicationStatsFragment,
 }) {
   return (
     <>
@@ -27,9 +28,9 @@ export default function PostDetails({ media, name, content, postId, createdAt, i
               <h1 className="text-2xl">{name}</h1>
               <h1 className="text-lg italic text-slate-400">@{profile?.handle}</h1>
             </div>
-            <div className="text-[#999] italic flex">
+            {createdAt && <div className="text-[#999] italic flex">
               <PastTime time={createdAt} />
-            </div>
+            </div>}
             <p>{content}</p>
           </>
         ) : (
@@ -38,13 +39,13 @@ export default function PostDetails({ media, name, content, postId, createdAt, i
               <h1 className="text-md italic text-slate-400">@{profile?.handle}</h1>
               <p>{content}</p>
             </div>
-            <div className="text-[#999] italic flex">
+            {createdAt && <div className="text-[#999] italic flex">
               <PastTime time={createdAt} />
-            </div>
+            </div>}
           </>
         )}
       </div>
-      {stats?.commentsCount > 0 ? (
+      {Number(stats?.totalAmountOfComments) > 0 ? (
         <div className="pl-8 w-[100%]">
           <Comments publicationId={postId} isComment={isComment} />
         </div>

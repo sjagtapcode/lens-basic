@@ -1,3 +1,5 @@
+'use client'
+
 import Moment from "react-moment";
 
 export default function PastTime({ time }: { time: string }) {

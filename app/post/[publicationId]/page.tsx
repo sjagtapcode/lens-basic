@@ -1,36 +1,28 @@
-"use client"
 import PostDetails from "@/components/publications/post-details";
-import Loader from "@/components/ui/loader";
-import { Post, PublicationId, usePublication } from "@lens-protocol/react-web";
+import { getPublicationById } from "@/lib/queries/getPublicationById";
 import { useMemo } from "react";
 
 const URL = process?.env?.NEXT_PUBLIC_URL || 'https://lens-basic.vercel.app'
 
-export default function PublicationDetails({ params }: { params: { publicationId: string } }) {
-  const { data, error, loading } = usePublication({
-    publicationId: params?.publicationId as PublicationId,
-  })
+export default async function PublicationDetails({ params }: { params: { publicationId: string } }) {
+  const { data, error } = await getPublicationById(params?.publicationId)
 
-  const { name, content, media, id, profile, stats, createdAt } = useMemo(() => {
-    const postData = data as Post
-    return {
-      id: postData?.id,
-      name: postData?.profile?.name,
-      content: postData?.metadata?.content,
-      media: postData?.metadata?.media,
-      profile: postData?.profile,
-      stats: postData?.stats,
-      createdAt: postData?.createdAt,
-    }
-  }, [data])
+  const { name, content, media, id, profile, stats, createdAt } = {
+    id: data?.id,
+    name: data?.profile?.name,
+    content: data?.metadata?.content,
+    media: data?.metadata?.media,
+    profile: data?.profile,
+    stats: data?.stats,
+    createdAt: data?.createdAt,
+  }
   const metaImage = `${URL}/api/og/post?name=${name}&mediaUrl=${media?.[0]?.optimized?.url}&mediaType=${media?.[0]?.optimized?.mimeType}&mediaCover=${media?.[0]?.optimized?.cover}&content=${content}&createdAt=${createdAt}&profileHandle=${profile?.handle}`
+  if(error) return <div>{error}</div>
+  if(!data) return <div>Post Data not found!</div>
   return (
     <div className="m-4 flex gap-8 flex-col content-center">
-      {loading ? <Loader /> : 
-        error ? <div>{error.message}</div> : (
-        <PostDetails media={media} name={name || ''} content={content || ''} postId={id} profile={profile} stats={stats} createdAt={createdAt} />
-      )}
-      {data && <meta property="og:image" content={metaImage} />}
+      <PostDetails media={media} name={name || ''} content={content || ''} postId={id} profile={profile} stats={stats} createdAt={createdAt} />
+      <meta property="og:image" content={metaImage} />
     </div>
   )
 }

@@ -1,15 +1,17 @@
+"use client"
+
 import { PublicationId, useComments } from "@lens-protocol/react-web"
 import Loader from "../ui/loader"
 import PostDetails from "./post-details"
 import { useState } from "react";
 
-export default function Comments({ publicationId, isComment }: { publicationId: PublicationId, isComment?: boolean }) {
+export default function Comments({ publicationId, isComment }: { publicationId?: string, isComment?: boolean }) {
   const [showComments, setComments] = useState(!isComment);
   const handleToggle = () => {
     setComments((prev) => !prev)
   }
   const { data, loading, hasMore, next } = useComments({
-    commentsOf: publicationId,
+    commentsOf: publicationId as unknown as PublicationId,
     limit: 10,
   })
   return (
