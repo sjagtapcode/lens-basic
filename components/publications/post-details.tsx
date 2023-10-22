@@ -20,7 +20,6 @@ export default function PostDetails({ media, name, content, postId, createdAt, i
 }) {
   return (
     <>
-      <div className="flex justify-center">
         {Number(media?.length) > 1 ? (
           <Carousel>
             {media?.map(({ optimized }) => (
@@ -30,7 +29,6 @@ export default function PostDetails({ media, name, content, postId, createdAt, i
         ) : (
           <Media key={media?.[0]?.original?.url} data={media?.[0]?.original} />
         )}
-      </div>
       <div>
         {!isComment ? (
           <>

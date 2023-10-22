@@ -65,10 +65,6 @@ export function Nav() {
     }
   }
 
-  console.log('address: ', address)
-  console.log('isConnected: ', isConnected)
-  console.log('wallet: ', wallet)
-
   return (
     <nav className='border-b p-4 pl-10 flex sm:flex-row sm:items-center flex-col'>
       <div className='flex flex-1 flex-row'>
@@ -90,18 +86,18 @@ export function Nav() {
         </Link>
       </div>
       <div className='sm:hidden mt-3'>
-        {
+        {/* {
           isClient && !address && (
             <Button variant='outline' className='mr-3' onClick={connectWallet}>
               <LogIn className='mr-2' />
               Connect Wallet
             </Button>
           ) 
-        }
+        } */}
         <ModeToggle />
       </div>
       <div className='mr-4 sm:flex items-center hidden '>
-        {
+        {/* {
           isClient && !address && (
             <Button variant='outline' className='mr-3' onClick={connectWallet}>
               <LogIn className='mr-2' />
@@ -124,7 +120,7 @@ export function Nav() {
               Sign Out.
             </Button>
           )
-        }
+        } */}
         <ModeToggle />
       </div>
     </nav>

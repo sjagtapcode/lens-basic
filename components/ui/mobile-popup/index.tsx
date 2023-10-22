@@ -1,27 +1,35 @@
 "use client"
 
 import * as Popover from '@radix-ui/react-popover';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import './mobile-popup.css';
 import { usePathname } from 'next/navigation';
+import { utilDeviceDetection } from '@/lib/checkMobile';
 
-export default function MobilePopup({ isMobile }: { isMobile?: boolean }) {
+export default function MobilePopup() {
+  const [isMobile, setIsMobile] = useState(true)
   const [open, setOpen] = useState(true)
   const handleToggle = () => {
     setOpen((prev) => !prev)
   }
   const path = usePathname()
-  console.log(path)
+
+  useLayoutEffect(() => {
+    const { isMobile } = utilDeviceDetection()
+    setIsMobile(isMobile)
+  }, [])
+
   return (
     <Popover.Root defaultOpen open={open}>
       <Popover.Trigger className='triggerWrapper' onClick={handleToggle}>
         <div className='trigger'>
-          !!!
+          {open ? 'X' : '!!!'}
         </div>
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content className="PopoverContent" sideOffset={5}>
           <div className='container flex flex-col gap-[10px]'>
+            <div>Use Orb to view the page</div>
             {isMobile ? (
               <a href={`https://orb.ac${path}`} target="_blank"><button className='button bg-[#000] w-[150px] h-[40px] border-[1px] border-[#AAA] border-solid rounded-sm'>Open in Orb</button></a>
             ) : (

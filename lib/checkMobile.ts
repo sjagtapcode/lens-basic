@@ -1,10 +1,7 @@
-import { GetServerSidePropsContext } from "next"
+'use client'
 
-export const utilServerSideDeviceDetection = (context: GetServerSidePropsContext)=> {
-  const isServer = !!context.req
-  const userAgent: string = isServer
-    ? context.req.headers['user-agent'] || ''
-    : navigator.userAgent || ''
+export const utilDeviceDetection = ()=> {
+  const userAgent: string = window?.navigator?.userAgent
   const isLine = /\bLine\//i.test(userAgent) || false
   const isMobile = /(iPad|iPhone|Android|Mobile)/i.test(userAgent) || false
   const rules = [
