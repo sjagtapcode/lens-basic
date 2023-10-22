@@ -1,8 +1,12 @@
+"use client"
+
 import Media from "../media";
 import Comments from "./comments";
 import PastTime from "../ui/pastTime";
 import { ProfileFragment, PublicationMediaSetFragment, SimplePublicationStatsFragment } from "@lens-protocol/client";
 import { Profile, PublicationMediaSet } from "@lens-protocol/react-web";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 export default function PostDetails({ media, name, content, postId, createdAt, isComment, profile, stats }: {
   media?: PublicationMediaSetFragment[] | PublicationMediaSet[],
@@ -17,9 +21,15 @@ export default function PostDetails({ media, name, content, postId, createdAt, i
   return (
     <>
       <div className="flex justify-center">
-        {media?.map(({ original }) => (
-          <Media key={original?.url} data={original} />
-        ))}
+        {Number(media?.length) > 1 ? (
+          <Carousel>
+            {media?.map(({ optimized }) => (
+              <Media key={optimized?.url} data={optimized} />
+            ))}
+          </Carousel>
+        ) : (
+          <Media key={media?.[0]?.original?.url} data={media?.[0]?.original} />
+        )}
       </div>
       <div>
         {!isComment ? (
