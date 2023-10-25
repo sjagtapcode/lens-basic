@@ -22,7 +22,10 @@ export default async function PublicationDetails({ params }: { params: { publica
   return (
     <div className="m-4 flex gap-8 flex-col content-center">
       <PostDetails media={media} name={name || ''} content={content || ''} postId={id} profile={profile} stats={stats} createdAt={createdAt} />
-      <meta property="og:image" content={metaImage} />
+      <meta property="og:image" itemProp="image" content={metaImage} />
+      <meta property="og:url" content={`${URL}/post/${params?.publicationId}`} />
+      <meta property="og:title" content={name || 'Unavailable Post'} />
+      <meta property="og:description" content={content || 'Content Unavailable'} />
     </div>
   )
 }
