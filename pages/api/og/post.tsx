@@ -4,11 +4,11 @@ export const runtime = 'edge';
  
 async function GET(searchParams) {
   const name = searchParams.get('name');
-  const mediaUrl = searchParams.get('mediaUrl');
-  const mediaType = searchParams.get('mediaType') as string;
-  const mediaCover = searchParams.get('mediaCover');
-  const content = searchParams.get('content');
-  const profileHandle = searchParams.get('profileHandle');
+  const mediaUrl = searchParams.get('mediaUrl') || searchParams.get('amp;mediaUrl');
+  const mediaType = searchParams.get('mediaType') || searchParams.get('amp;mediaType');
+  const mediaCover = searchParams.get('mediaCover') || searchParams.get('amp;mediaCover');
+  const content = searchParams.get('content') || searchParams.get('amp;content');
+  const profileHandle = searchParams.get('profileHandle') || searchParams.get('amp;profileHandle');
 
   const image = mediaType?.startsWith('image') ? mediaUrl : mediaCover;
   return new ImageResponse(
