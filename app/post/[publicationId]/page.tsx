@@ -1,6 +1,5 @@
 import PostDetails from "@/components/publications/post-details";
 import { getPublicationById } from "@/lib/queries/getPublicationById";
-import { useMemo } from "react";
 
 const URL = process?.env?.NEXT_PUBLIC_URL || 'https://lens-basic.vercel.app'
 
@@ -21,11 +20,11 @@ export default async function PublicationDetails({ params }: { params: { publica
   if(!data) return <div>Post Data not found!</div>
   return (
     <div className="m-4 flex gap-8 flex-col content-center">
-      <PostDetails media={media} name={name || ''} content={content || ''} postId={id} profile={profile} stats={stats} createdAt={createdAt} />
       <meta property="og:image" itemProp="image" content={metaImage} />
       <meta property="og:url" content={`${URL}/post/${params?.publicationId}`} />
       <meta property="og:title" content={name || ''} />
       <meta property="og:description" content={content || ''} />
+      <PostDetails media={media} name={name || ''} content={content || ''} postId={id} profile={profile} stats={stats} createdAt={createdAt} />
     </div>
   )
 }
