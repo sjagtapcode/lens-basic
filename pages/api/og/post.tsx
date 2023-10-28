@@ -28,9 +28,9 @@ async function GET(searchParams) {
           <img
             src={image}
             style={{
-              width: '400px',
+              width: '100%',
               height: '400px',
-              objectFit: 'cover',
+              objectFit: 'contain',
               border: '5px solid black'
             }}
           />
@@ -79,8 +79,8 @@ async function GET(searchParams) {
       </div>
     ),
     {
-      width: 400,
-      height: 500,
+      width: 1200,
+      height: 630,
     },
   );
 }
