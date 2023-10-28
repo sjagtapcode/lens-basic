@@ -20,7 +20,7 @@ export default async function PublicationDetails({ params }: { params: { publica
   if(!data) return <div>Post Data not found!</div>
   return (
     <div className="m-4 flex gap-8 flex-col content-center">
-      <meta property="og:image:type" content="image/png " />
+      <meta property="og:type" content="image/png " />
       <meta property="og:image" itemProp="image" content={metaImage} />
       <meta property="og:url" content={`${URL}/post/${params?.publicationId}`} />
       <meta property="og:title" content={name || ''} />
