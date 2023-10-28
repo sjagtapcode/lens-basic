@@ -20,11 +20,25 @@ export default async function PublicationDetails({ params }: { params: { publica
   if(!data) return <div>Post Data not found!</div>
   return (
     <div className="m-4 flex gap-8 flex-col content-center">
+      {/* Facebook meta tags */}
       <meta property="og:type" content="image/png " />
       <meta property="og:image" itemProp="image" content={metaImage} />
+      <meta property="og:image:secure_url" content={metaImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={name || ''} />
       <meta property="og:url" content={`${URL}/post/${params?.publicationId}`} />
       <meta property="og:title" content={name || ''} />
       <meta property="og:description" content={content || ''} />
+
+      {/* Twitter meta tags */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:image" content={metaImage} />
+      <meta property="twitter:domain" content={URL} />
+      <meta property="twitter:url" content={`${URL}/post/${params?.publicationId}`} />
+      <meta name="twitter:title" content={name || ''} />
+      <meta name="twitter:description" content={content || ''} />
+
       <PostDetails media={media} name={name || ''} content={content || ''} postId={id} profile={profile} stats={stats} createdAt={createdAt} />
     </div>
   )

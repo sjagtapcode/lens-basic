@@ -35,11 +35,25 @@ export default async function ProfileByHandle({ params }: { params: { handle: st
             <h3 className="text-xl mb-4 text-center">{profile?.bio}</h3>
           </div>
       </div>
+      {/* Facebook meta tags */}
       <meta property="og:type" content="image/png" />
       <meta property="og:image" itemProp="image" content={metaImage} />
+      <meta property="og:image:secure_url" content={metaImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="600" />
+      <meta property="og:image:alt" content={profile?.name || `${params?.handle} Profile`} />
       <meta property="og:url" content={`${URL}/${params?.handle}`} />
       <meta property="og:title" content={profile?.name || `${params?.handle} Profile`} />
       <meta property="og:description" content={profile?.bio || 'Profile Info description'} />
+
+      {/* Twitter meta tags */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta property="twitter:image"  content={metaImage} />
+      <meta property="twitter:domain" content={URL} />
+      <meta property="twitter:url" content={`${URL}/${params?.handle}`} />
+      <meta property="twitter:title" content={profile?.name || `${params?.handle} Profile`} />
+      <meta property="twitter:description" content={profile?.bio || 'Profile Info description'} />
+
       <UserPublications profileId={profile?.id} />
     </div>
   )
