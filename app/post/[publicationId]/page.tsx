@@ -15,7 +15,7 @@ export default async function PublicationDetails({ params }: { params: { publica
     stats: data?.stats,
     createdAt: data?.createdAt,
   }
-  const metaImage = `${URL}/api/og/post?name=${name}&mediaUrl=${media?.[0]?.optimized?.url}&mediaType=${media?.[0]?.optimized?.mimeType}&mediaCover=${media?.[0]?.optimized?.cover}&content=${content}&createdAt=${createdAt}&profileHandle=${profile?.handle}`
+  const metaImage = `${URL}/api/og/post?postId=${data?.id}`
   if(error) return <div>{error}</div>
   if(!data) return <div>Post Data not found!</div>
   return (

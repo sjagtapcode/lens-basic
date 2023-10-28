@@ -1,14 +1,25 @@
+import { getPublicationById } from '@/lib/queries/getPublicationById';
 import { ImageResponse } from 'next/server';
  
 export const runtime = 'edge';
  
 async function GET(searchParams) {
-  const name = searchParams.get('name');
-  const mediaUrl = searchParams.get('mediaUrl');
-  const mediaType = searchParams.get('mediaType') as string;
-  const mediaCover = searchParams.get('mediaCover');
-  const content = searchParams.get('content');
-  const profileHandle = searchParams.get('profileHandle');
+  const postId = searchParams.get('postId');
+  const { data, error } = await getPublicationById(postId)
+  if (error || !data) {
+    return ''
+  }  
+
+  const { name, content, media, profile } = {
+    name: data?.profile?.name,
+    content: data?.metadata?.content,
+    media: data?.metadata?.media,
+    profile: data?.profile,
+  }
+  const mediaUrl = media?.[0]?.original?.url
+  const mediaType = media?.[0]?.original?.mimeType
+  const mediaCover = media?.[0]?.original?.cover
+  const profileHandle = profile?.handle
 
   const image = mediaType?.startsWith('image') ? mediaUrl : mediaCover;
   return new ImageResponse(
@@ -30,7 +41,7 @@ async function GET(searchParams) {
             style={{
               width: '100%',
               height: '400px',
-              objectFit: 'contain',
+              objectFit: 'cover',
               border: '5px solid black'
             }}
           />
