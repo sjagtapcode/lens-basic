@@ -1,7 +1,7 @@
 import { getPublicationById } from '@/lib/queries/getPublicationById';
 import { ImageResponse } from 'next/server';
  
-// export const runtime = 'edge';
+export const runtime = 'edge';
  
 async function GET(searchParams) {
   const postId = searchParams.get('postId');
