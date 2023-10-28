@@ -35,6 +35,7 @@ export default async function ProfileByHandle({ params }: { params: { handle: st
             <h3 className="text-xl mb-4 text-center">{profile?.bio}</h3>
           </div>
       </div>
+      <meta property="og:image:type" content="image/png" />
       <meta property="og:image" itemProp="image" content={metaImage} />
       <meta property="og:url" content={`${URL}/${params?.handle}`} />
       <meta property="og:title" content={profile?.name || `${params?.handle} Profile`} />
