@@ -21,7 +21,6 @@ export default async function PublicationDetails({ params }: { params: { publica
   return (
     <div className="m-4 flex gap-8 flex-col content-center">
       {/* Facebook meta tags */}
-      <meta property="og:type" content="website" />
       <meta property="og:image" content={metaImage} />
       <meta property="og:url" content={`${URL}/post/${params?.publicationId}`} />
       <meta property="og:title" content={name || ''} />

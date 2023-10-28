@@ -36,7 +36,6 @@ export default async function ProfileByHandle({ params }: { params: { handle: st
           </div>
       </div>
       {/* Facebook meta tags */}
-      <meta property="og:type" content="website" />
       <meta property="og:image" content={metaImage} />
       <meta property="og:url" content={`${URL}/${params?.handle}`} />
       <meta property="og:title" content={profile?.name || `${params?.handle} Profile`} />
