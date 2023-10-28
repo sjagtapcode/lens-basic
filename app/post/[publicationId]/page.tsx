@@ -24,8 +24,8 @@ export default async function PublicationDetails({ params }: { params: { publica
       <PostDetails media={media} name={name || ''} content={content || ''} postId={id} profile={profile} stats={stats} createdAt={createdAt} />
       <meta property="og:image" itemProp="image" content={metaImage} />
       <meta property="og:url" content={`${URL}/post/${params?.publicationId}`} />
-      <meta property="og:title" content={name || 'Unavailable Post'} />
-      <meta property="og:description" content={content || 'Content Unavailable'} />
+      <meta property="og:title" content={name || ''} />
+      <meta property="og:description" content={content || ''} />
     </div>
   )
 }
