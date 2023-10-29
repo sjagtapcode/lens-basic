@@ -1,11 +1,12 @@
 import UserPublications from '@/components/publications/user-publications'
 import { getProfileByHandle } from '@/lib/queries/getProfileByHandle'
+import { removeAmp } from '@/lib/utils'
 
 const URL = process?.env?.NEXT_PUBLIC_URL || 'https://lens-basic.vercel.app'
 
 export default async function ProfileByHandle({ params }: { params: { handle: string } }) {
   const { profile, error } = await getProfileByHandle(params?.handle)
-  const metaImage = `${URL}/api/og/profile?handle=${profile?.handle}&profilePicture=${profile?.picture?.__typename === "MediaSet" ? profile?.picture?.original?.url : ''}&coverPicture=${profile?.coverPicture?.__typename === "MediaSet" ? profile?.coverPicture?.original?.url : ''}&bio=${profile?.bio}`
+  const metaImage = `${URL}/api/og/profile?handle=${removeAmp(profile?.handle)}&profilePicture=${removeAmp(profile?.picture?.__typename === "MediaSet" ? profile?.picture?.original?.url : '')}&coverPicture=${removeAmp(profile?.coverPicture?.__typename === "MediaSet" ? profile?.coverPicture?.original?.url : '')}&bio=${removeAmp(profile?.bio)}`
   if(error) return <div>{error}</div>
   if (!profile) return <div>Profile Data Not Found!</div>
   return (

@@ -1,5 +1,6 @@
 import PostDetails from "@/components/publications/post-details";
 import { getPublicationById } from "@/lib/queries/getPublicationById";
+import { removeAmp } from "@/lib/utils";
 
 const URL = process?.env?.NEXT_PUBLIC_URL || 'https://lens-basic.vercel.app'
 
@@ -15,7 +16,7 @@ export default async function PublicationDetails({ params }: { params: { publica
     stats: data?.stats,
     createdAt: data?.createdAt,
   }
-  const metaImage = `${URL}/api/og/post?name=${name}&mediaUrl=${media?.[0]?.optimized?.url}&mediaType=${media?.[0]?.optimized?.mimeType}&mediaCover=${media?.[0]?.optimized?.cover}&content=${content}&createdAt=${createdAt}&profileHandle=${profile?.handle}`
+  const metaImage = `${URL}/api/og/post?name=${removeAmp(name)}&mediaUrl=${removeAmp(media?.[0]?.optimized?.url)}&mediaType=${removeAmp(media?.[0]?.optimized?.mimeType)}&mediaCover=${removeAmp(media?.[0]?.optimized?.cover)}&content=${removeAmp(content)}&createdAt=${removeAmp(createdAt)}&profileHandle=${removeAmp(profile?.handle)}`
   if(error) return <div>{error}</div>
   if(!data) return <div>Post Data not found!</div>
   return (

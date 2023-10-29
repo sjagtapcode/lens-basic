@@ -1,3 +1,4 @@
+import { addAmp } from '@/lib/utils';
 import { ImageResponse } from 'next/server';
  
 export const runtime = 'edge';
@@ -5,10 +6,10 @@ export const runtime = 'edge';
 const URL = process?.env?.NEXT_PUBLIC_URL || 'https://lens-basic.vercel.app'
 
 async function GET(searchParams) {
-  const handle = searchParams.get('handle');
-  const profilePicture = searchParams.get('profilePicture');
-  const coverPicture = searchParams.get('coverPicture');
-  const bio = searchParams.get('bio');
+  const handle = addAmp(searchParams.get('handle') || searchParams.get('amp;handle'));
+  const profilePicture = addAmp(searchParams.get('profilePicture') || searchParams.get('amp;profilePicture'));
+  const coverPicture = addAmp(searchParams.get('coverPicture') || searchParams.get('amp;coverPicture'));
+  const bio = addAmp(searchParams.get('bio') || searchParams.get('amp;bio'));
 
   return new ImageResponse(
     (

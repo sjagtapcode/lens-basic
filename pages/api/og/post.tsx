@@ -1,14 +1,15 @@
+import { addAmp } from '@/lib/utils';
 import { ImageResponse } from 'next/server';
  
 export const runtime = 'edge';
  
 async function GET(searchParams) {
-  const name = searchParams.get('name');
-  const mediaUrl = searchParams.get('mediaUrl') || searchParams.get('amp;mediaUrl');
-  const mediaType = searchParams.get('mediaType') || searchParams.get('amp;mediaType');
-  const mediaCover = searchParams.get('mediaCover') || searchParams.get('amp;mediaCover');
-  const content = searchParams.get('content') || searchParams.get('amp;content');
-  const profileHandle = searchParams.get('profileHandle') || searchParams.get('amp;profileHandle');
+  const name = addAmp(searchParams.get('name'));
+  const mediaUrl = addAmp(searchParams.get('mediaUrl') || searchParams.get('amp;mediaUrl'));
+  const mediaType = addAmp(searchParams.get('mediaType') || searchParams.get('amp;mediaType'));
+  const mediaCover = addAmp(searchParams.get('mediaCover') || searchParams.get('amp;mediaCover'));
+  const content = addAmp(searchParams.get('content') || searchParams.get('amp;content'));
+  const profileHandle = addAmp(searchParams.get('profileHandle') || searchParams.get('amp;profileHandle'));
 
   const image = mediaType?.startsWith('image') ? mediaUrl : mediaCover;
   return new ImageResponse(
