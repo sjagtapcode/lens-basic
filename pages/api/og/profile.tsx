@@ -74,8 +74,8 @@ async function GET(searchParams) {
       </div>
     ),
     {
-      width: 1200,
-      height: 630,
+      width: 256,
+      height: 256,
     },
   );
 }
