@@ -22,10 +22,11 @@ export default async function PublicationDetails({ params }: { params: { publica
   return (
     <div className="m-4 flex gap-8 flex-col content-center">
       {/* Facebook meta tags */}
-      <meta property="og:image" content={metaImage} />
+      <meta property="og:image" itemProp="image" content={metaImage} />
       <meta property="og:url" content={`${URL}/post/${params?.publicationId}`} />
       <meta property="og:title" content={name || ''} />
       <meta property="og:description" content={content || ''} />
+      <meta property="og:type" content="website" />
 
       {/* Twitter meta tags */}
       <meta name="twitter:card" content="summary_large_image" />
