@@ -22,6 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className='m-auto max-w-[1440px]'>
+      <head>
+        <meta property="og:image" itemProp="image" content="https://lens-basic.vercel.app/lens.svg" />
+      </head>
       <body className={inter.className}>
         <Web3ModalProvider>
           <LensProvider>
