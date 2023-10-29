@@ -6,9 +6,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function removeAmp(str?: string | null) {
-  return str?.replace('&', '[|]') || ''
+  return str?.replaceAll('&', '[|]')?.replaceAll('#', '[||]') || ''
 }
 
 export function addAmp(str?: string | null) {
-  return str?.replace('[|]', '&') || ''
+  return str?.replaceAll('[|]', '&')?.replaceAll('[||]', '#') || ''
 }
