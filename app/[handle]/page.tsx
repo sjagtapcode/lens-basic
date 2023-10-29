@@ -39,7 +39,7 @@ export default async function ProfileByHandle({ params }: { params: { handle: st
       {/* Facebook meta tags */}
       <head>
       <meta property="og:image" content={metaImage} />
-      <meta property="og:image" itemProp="image" content={metaImage} />
+      <meta property="og:image" itemprop="image" content={metaImage} />
       <meta property="og:image:secure_url" content={metaImage} />
       <meta property="og:image:width" content="256" />
       <meta property="og:image:height" content="256" />
