@@ -4,7 +4,7 @@ import * as Popover from '@radix-ui/react-popover';
 import { useLayoutEffect, useState } from 'react';
 import './mobile-popup.css';
 import { usePathname } from 'next/navigation';
-import { utilDeviceDetection } from '@/lib/checkMobile';
+import { DEVICES, utilDeviceDetection } from '@/lib/checkMobile';
 
 export default function MobilePopup() {
   const [isMobile, setIsMobile] = useState(true)
@@ -12,7 +12,25 @@ export default function MobilePopup() {
   const handleToggle = () => {
     setOpen((prev) => !prev)
   }
+
   const path = usePathname()
+  const android = `intent://#Intent;package=app.orb.flutter;scheme=orb.ac:/${path}?referrer=app_link;end`
+  const ios = `orb.ac:/${path}`
+
+  console.log(path)
+
+  const handleClick = () => {
+    const { device } = utilDeviceDetection()
+    if(device === DEVICES.ANDROID) {
+      document.location = `intent://#Intent;package=app.orb.flutter;scheme=orb.ac:/${path}?referrer=app_link;end`
+    } else if (device === DEVICES.IOS) {
+      document.location = `orb.ac:/${path}` 
+    } else {
+      if(window) {
+        window.location.replace(`https://orb.ac${path}`)
+      }
+    }
+  }
 
   useLayoutEffect(() => {
     const { isMobile } = utilDeviceDetection()
@@ -31,7 +49,7 @@ export default function MobilePopup() {
           <div className='container flex flex-col gap-[10px]'>
             <div>Use Orb to view the page</div>
             {isMobile ? (
-              <a href={`https://orb.ac${path}`} target="_blank"><button className='button bg-[#000] w-[150px] h-[40px] border-[1px] border-[#AAA] border-solid rounded-sm'>Open in Orb</button></a>
+              <button onClick={handleClick} className='button bg-[#000] w-[150px] h-[40px] border-[1px] border-[#AAA] border-solid rounded-sm'>Open in Orb</button>
             ) : (
               <>
                 <a href={`https://apps.apple.com/us/app/id1638461963`} target="_blank">
@@ -42,6 +60,16 @@ export default function MobilePopup() {
                 </a>
               </>
             )}
+            <a href={android}>
+              <button onClick={handleClick} className='button bg-[#000] w-[150px] h-[40px] border-[1px] border-[#AAA] border-solid rounded-sm'>
+                {android}
+              </button>
+            </a>
+            <a href={ios}>
+              <button onClick={handleClick} className='button bg-[#000] w-[150px] h-[40px] border-[1px] border-[#AAA] border-solid rounded-sm'>
+                {ios}
+              </button>
+            </a>
           </div>
         </Popover.Content>
       </Popover.Portal>

@@ -1,6 +1,12 @@
 'use client'
 
-export const utilDeviceDetection = ()=> {
+export const DEVICES = {
+  ANDROID: 'ANDROID',
+  IOS: 'IOS',
+  UKNOWN: 'UNKNOWN',
+}
+
+export const utilDeviceDetection = () => {
   const userAgent: string = window?.navigator?.userAgent
   const isLine = /\bLine\//i.test(userAgent) || false
   const isMobile = /(iPad|iPhone|Android|Mobile)/i.test(userAgent) || false
@@ -13,10 +19,13 @@ export const utilDeviceDetection = ()=> {
   const regex = new RegExp(`(${rules.join('|')})`, 'ig')
   const isInApp = Boolean(userAgent.match(regex))
 
+  const device = /android/i.test(userAgent) ? DEVICES.ANDROID : /iPad|iPhone|iPod/.test(userAgent) ? DEVICES.IOS : DEVICES.UKNOWN
+
   return {
     isMobile,
     isLine,
     isInApp,
-    userAgent
+    userAgent,
+    device,
   }
 }
