@@ -1,7 +1,13 @@
-import PostDetails from "@/components/publications/post-details";
 import MobileSeo from "@/components/seo/mobile";
 import { getPublicationById } from "@/lib/queries/getPublicationById";
 import { removeAmp } from "@/lib/utils";
+import dynamic from "next/dynamic";
+const PostDetails = dynamic(() => import('@/components/publications/post-details'), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+})
+ 
+
 
 const URL = process?.env?.NEXT_PUBLIC_URL || 'https://lens-basic.vercel.app'
 
