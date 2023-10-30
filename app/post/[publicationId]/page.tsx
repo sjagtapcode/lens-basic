@@ -1,4 +1,5 @@
 import PostDetails from "@/components/publications/post-details";
+import MobileSeo from "@/components/seo/mobile";
 import { getPublicationById } from "@/lib/queries/getPublicationById";
 import { removeAmp } from "@/lib/utils";
 
@@ -22,7 +23,7 @@ export default async function PublicationDetails({ params }: { params: { publica
   return (
     <div className="m-4 flex gap-8 flex-col content-center">
       {/* Facebook meta tags */}
-      <meta property="og:image" itemProp="image" content={metaImage} />
+      <meta property="og:image" content={metaImage} />
       <meta property="og:url" content={`${URL}/post/${params?.publicationId}`} />
       <meta property="og:title" content={name || ''} />
       <meta property="og:description" content={content || ''} />
@@ -35,6 +36,8 @@ export default async function PublicationDetails({ params }: { params: { publica
       <meta property="twitter:url" content={`${URL}/post/${params?.publicationId}`} />
       <meta name="twitter:title" content={name || ''} />
       <meta name="twitter:description" content={content || ''} />
+
+      <MobileSeo />
 
       <PostDetails media={media} name={name || ''} content={content || ''} postId={id} profile={profile} stats={stats} createdAt={createdAt} />
     </div>
