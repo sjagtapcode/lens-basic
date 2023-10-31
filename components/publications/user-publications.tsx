@@ -2,10 +2,10 @@
 
 import { PublicationTypes, usePublications } from "@lens-protocol/react-web";
 import { Publication } from "@lens-protocol/widgets-react";
-import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { Button } from "../ui/button";
 import Loader from "../ui/loader";
+import PublicationCard from "./publication-card";
 
 type PublicationType = "Comment" | "Post"
 
@@ -25,19 +25,11 @@ export default function UserPublications({ profileId }) {
     })
   ), [publications])
 
-  const { push } = useRouter();
-
-  const handleRedirect = (id: string, type: PublicationType) => {
-    if(type === "Post")
-    push(`/post/${id}`);
-  }
 
   return (
     <div className="relative top-[-50px] sm:top-[-100px] flex flex-col gap-8 p-8 max-w-[100%]">
-      {publicationData?.map(({ id, __typename }) => (
-        <div key={id}>
-          <Publication key={id} publicationId={id} onClick={() => handleRedirect(id, __typename)} />
-        </div>
+      {publicationData?.map(({ __typename, ...data }) => (
+        __typename === 'Post' ? <PublicationCard key={data?.id} {...data} /> : null
       ))}
       {loading ? <Loader /> : ''}
       {!loading && hasMore ? <Button onClick={next}>Load More</Button> : ''}
