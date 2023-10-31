@@ -12,7 +12,25 @@ export default function MobilePopup() {
   const handleToggle = () => {
     setOpen((prev) => !prev)
   }
+
   const path = usePathname()
+  const android = `intent://#Intent;package=app.orb.flutter;scheme=orb.ac:/${path}?referrer=app_link;end`
+  const ios = `orb.ac:/${path}`
+
+  console.log(path)
+
+  const handleClick = () => {
+    const { device } = utilDeviceDetection()
+    if(device === DEVICES.ANDROID) {
+      document.location = `intent://#Intent;package=app.orb.flutter;scheme=orb.ac:/${path}?referrer=app_link;end`
+    } else if (device === DEVICES.IOS) {
+      document.location = `orb.ac:/${path}` 
+    } else {
+      if(window) {
+        window.location.replace(`https://orb.ac${path}`)
+      }
+    }
+  }
 
   const handleClick = () => {
     const { device } = utilDeviceDetection()
@@ -55,6 +73,16 @@ export default function MobilePopup() {
                 </a>
               </>
             )}
+            <a href={android}>
+              <button onClick={handleClick} className='button bg-[#000] w-[150px] h-[40px] border-[1px] border-[#AAA] border-solid rounded-sm'>
+                {android}
+              </button>
+            </a>
+            <a href={ios}>
+              <button onClick={handleClick} className='button bg-[#000] w-[150px] h-[40px] border-[1px] border-[#AAA] border-solid rounded-sm'>
+                {ios}
+              </button>
+            </a>
           </div>
         </Popover.Content>
       </Popover.Portal>
