@@ -32,6 +32,19 @@ export default function MobilePopup() {
     }
   }
 
+  const handleClick = () => {
+    const { device } = utilDeviceDetection()
+    if(device === DEVICES.ANDROID) {
+      document.location = `intent://#Intent;package=app.orb.flutter;scheme=orb.ac:/${path}?referrer=app_link;end`
+    } else if (device === DEVICES.IOS) {
+      document.location = `orb.ac:/${path}` 
+    } else {
+      if(window) {
+        window.location.replace(`https://orb.ac${path}`)
+      }
+    }
+  }
+
   useLayoutEffect(() => {
     const { isMobile } = utilDeviceDetection()
     setIsMobile(isMobile)

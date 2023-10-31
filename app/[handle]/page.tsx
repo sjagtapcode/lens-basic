@@ -1,4 +1,5 @@
 import UserPublications from '@/components/publications/user-publications'
+import MobileSeo from '@/components/seo/mobile'
 import { getProfileByHandle } from '@/lib/queries/getProfileByHandle'
 import { removeAmp } from '@/lib/utils'
 
@@ -6,6 +7,7 @@ const URL = process?.env?.NEXT_PUBLIC_URL || 'https://lens-basic.vercel.app'
 
 export default async function ProfileByHandle({ params }: { params: { handle: string } }) {
   const { profile, error } = await getProfileByHandle(params?.handle)
+
   const metaImage = `${URL}/api/og/profile?handle=${removeAmp(profile?.handle)}&profilePicture=${removeAmp(profile?.picture?.__typename === "MediaSet" ? profile?.picture?.original?.url : '')}&coverPicture=${removeAmp(profile?.coverPicture?.__typename === "MediaSet" ? profile?.coverPicture?.original?.url : '')}&bio=${removeAmp(profile?.bio)}`
   if(error) return <div>{error}</div>
   if (!profile) return <div>Profile Data Not Found!</div>
@@ -22,22 +24,22 @@ export default async function ProfileByHandle({ params }: { params: { handle: st
         )}
       <div className='relative top-[-50px] sm:top-[-100px] grid place-items-center'>
         {profile?.picture?.__typename === "MediaSet" && (
-            <img
-              width="200"
-              height="200"
-              alt={profile.handle}
-              className="rounded-[50%] border-[4px] w-[100px] h-[100px] sm:w-[200px] sm:h-[200px]"
-              src={profile.picture.original.url}
-            />
-          )}
-          <div className='text-center mx-3'>
-            <h1 className="text-3xl my-3">{profile?.name}</h1>
-            <h1 className="text-3xl my-3">@{profile?.handle}</h1>
-            <h3 className="text-xl mb-4 text-center">{profile?.bio}</h3>
-          </div>
+          <img
+            width="200"
+            height="200"
+            alt={profile.handle}
+            className="rounded-[50%] border-[4px] w-[100px] h-[100px] sm:w-[200px] sm:h-[200px]"
+            src={profile.picture.original.url}
+          />
+        )}
+        <div className='text-center mx-3'>
+          <h1 className="text-3xl my-3">{profile?.name}</h1>
+          <h1 className="text-3xl my-3">@{profile?.handle}</h1>
+          <h3 className="text-xl mb-4 text-center">{profile?.bio}</h3>
+        </div>
       </div>
       {/* Facebook meta tags */}
-      <head>
+
       <meta property="og:image" content={metaImage} />
       <meta property="og:image" itemProp="image" content={metaImage}  />
       <meta property="og:image:secure_url" content={metaImage} />
@@ -57,7 +59,9 @@ export default async function ProfileByHandle({ params }: { params: { handle: st
       <meta property="twitter:url" content={`${URL}/${params?.handle}`} />
       <meta property="twitter:title" content={profile?.name || `${params?.handle} Profile`} />
       <meta property="twitter:description" content={profile?.bio || 'Profile Info description'} />
-      </head>
+
+      <MobileSeo />
+
       <UserPublications profileId={profile?.id} />
     </div>
   )

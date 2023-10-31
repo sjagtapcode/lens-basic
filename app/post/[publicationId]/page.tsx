@@ -1,6 +1,13 @@
-import PostDetails from "@/components/publications/post-details";
+import MobileSeo from "@/components/seo/mobile";
 import { getPublicationById } from "@/lib/queries/getPublicationById";
 import { removeAmp } from "@/lib/utils";
+import dynamic from "next/dynamic";
+const PostDetails = dynamic(() => import('@/components/publications/post-details'), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+})
+ 
+
 
 const URL = process?.env?.NEXT_PUBLIC_URL || 'https://lens-basic.vercel.app'
 
@@ -24,6 +31,7 @@ export default async function PublicationDetails({ params }: { params: { publica
       {/* Facebook meta tags */}
       <meta property="og:image" content={metaImage} />
       <meta property="og:image" itemProp="image" content={metaImage} />
+
       <meta property="og:url" content={`${URL}/post/${params?.publicationId}`} />
       <meta property="og:title" content={name || ''} />
       <meta property="og:description" content={content || ''} />
@@ -36,6 +44,8 @@ export default async function PublicationDetails({ params }: { params: { publica
       <meta property="twitter:url" content={`${URL}/post/${params?.publicationId}`} />
       <meta name="twitter:title" content={name || ''} />
       <meta name="twitter:description" content={content || ''} />
+
+      <MobileSeo />
 
       <PostDetails media={media} name={name || ''} content={content || ''} postId={id} profile={profile} stats={stats} createdAt={createdAt} />
     </div>
