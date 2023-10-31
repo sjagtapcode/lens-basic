@@ -8,7 +8,6 @@ const PostDetails = dynamic(() => import('@/components/publications/post-details
 })
  
 
-
 const URL = process?.env?.NEXT_PUBLIC_URL || 'https://lens-basic.vercel.app'
 
 export default async function PublicationDetails({ params }: { params: { publicationId: string } }) {
@@ -30,6 +29,7 @@ export default async function PublicationDetails({ params }: { params: { publica
     <div className="m-4 flex gap-8 flex-col content-center">
       {/* Facebook meta tags */}
       <meta property="og:image" content={metaImage} />
+      <meta property="og:image" itemProp="image" content={metaImage} />
       <meta property="og:url" content={`${URL}/post/${params?.publicationId}`} />
       <meta property="og:title" content={name || ''} />
       <meta property="og:description" content={content || ''} />
