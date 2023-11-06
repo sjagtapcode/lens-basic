@@ -14,17 +14,17 @@ export default function MobilePopup() {
   }
 
   const path = usePathname()
-  const android = `intent://#Intent;package=app.orb.flutter;scheme=orbapp:/${path}?referrer=app_link;end`
-  const ios = `orbapp:/${path}`
+  const android = `intent://#Intent;package=app.orb.flutter;scheme=orbapp://orb.ac${path}?referrer=app_link;end`
+  const ios = `orbapp://orb.ac${path}`
 
   console.log(path)
 
   const handleClick = () => {
     const { device } = utilDeviceDetection()
     if(device === DEVICES.ANDROID) {
-      document.location = `intent://#Intent;package=app.orb.flutter;scheme=orbapp:/${path}?referrer=app_link;end`
+      document.location = `intent://#Intent;package=app.orb.flutter;scheme=orbapp://orb.ac${path}?referrer=app_link;end`
     } else if (device === DEVICES.IOS) {
-      document.location = `orbapp:/${path}` 
+      document.location = `orbapp://orb.ac${path}` 
     } else {
       if(window) {
         window.location.replace(`https://orb.ac${path}`)
