@@ -14,17 +14,17 @@ export default function MobilePopup() {
   }
 
   const path = usePathname()
-  const android = `intent://#Intent;package=app.orb.flutter;scheme=orb.ac:/${path}?referrer=app_link;end`
-  const ios = `orb.ac:/${path}`
+  const android = `intent://#Intent;package=app.orb.flutter;scheme=orbapp:/${path}?referrer=app_link;end`
+  const ios = `orbapp:/${path}`
 
   console.log(path)
 
   const handleClick = () => {
     const { device } = utilDeviceDetection()
     if(device === DEVICES.ANDROID) {
-      document.location = `intent://#Intent;package=app.orb.flutter;scheme=orb.ac:/${path}?referrer=app_link;end`
+      document.location = `intent://#Intent;package=app.orb.flutter;scheme=orbapp:/${path}?referrer=app_link;end`
     } else if (device === DEVICES.IOS) {
-      document.location = `orb.ac:/${path}` 
+      document.location = `orbapp:/${path}` 
     } else {
       if(window) {
         window.location.replace(`https://orb.ac${path}`)
@@ -62,12 +62,12 @@ export default function MobilePopup() {
             )}
             <a href={android}>
               <button onClick={handleClick} className='button bg-[#000] w-[150px] h-[40px] border-[1px] border-[#AAA] border-solid rounded-sm'>
-                {android}
+                android
               </button>
             </a>
             <a href={ios}>
               <button onClick={handleClick} className='button bg-[#000] w-[150px] h-[40px] border-[1px] border-[#AAA] border-solid rounded-sm'>
-                {ios}
+                ios
               </button>
             </a>
           </div>
